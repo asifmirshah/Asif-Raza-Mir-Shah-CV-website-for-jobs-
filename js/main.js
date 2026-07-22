@@ -7,6 +7,27 @@ const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 /* ---------------------------------------------------------
+   0. MOBILE MENU
+--------------------------------------------------------- */
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('menu');
+  if(!btn || !menu) return;
+  function set(open){
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  btn.addEventListener('click', () => set(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(false)));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') set(false); });
+  document.addEventListener('click', e => {
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) set(false);
+  });
+  window.addEventListener('resize', () => { if(window.innerWidth > 900) set(false); });
+})();
+
+/* ---------------------------------------------------------
    1. HERO — a rotating field of scheduled bars.
    The hero background is a Gantt chart lifted into 3D:
    each bar is a task, its length is its duration.
