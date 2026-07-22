@@ -24,7 +24,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   document.addEventListener('click', e => {
     if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) set(false);
   });
-  window.addEventListener('resize', () => { if(window.innerWidth > 900) set(false); });
+  window.addEventListener('resize', () => { if(window.innerWidth > 1040) set(false); });
 })();
 
 /* ---------------------------------------------------------
